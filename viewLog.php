@@ -50,6 +50,9 @@ $fp = fopen($filename, 'rb');
 while (!feof($fp)) {
     $line = fgets($fp);
     if (mb_strpos($line, '[Server thread/INFO]') !== false) {
+        if (mb_strpos($line, 'logged in with entity id') !== false) {
+            continue;
+        }
         $className = '';
         if (mb_strpos($line, 'joined the game') !== false) {
             $className = 'joined';
