@@ -59,6 +59,7 @@ while (!feof($fp)) {
         } else if (mb_strpos($line, 'left the game') !== false) {
             @$className = 'left';
         }
+        $line = htmlentities($line, ENT_QUOTES, mb_internal_encoding());
         echo "<li class=\"{$className}\">{$line}</li>";
     }
 }
