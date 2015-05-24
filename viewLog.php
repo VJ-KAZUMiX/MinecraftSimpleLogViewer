@@ -52,7 +52,7 @@ if (isset($_GET['size'])) {
         $size = 1;
     }
 }
-$logReader = new MinecraftLogReader('sampleLogs', MAX_LOG_SIZE * $size);
+$logReader = new MinecraftLogReader(LOGS_DIR, MAX_LOG_SIZE * $size);
 $logReader->displayLog();
 ?>
 </ul>
