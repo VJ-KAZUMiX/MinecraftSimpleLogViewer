@@ -41,6 +41,7 @@ header('Pragma: no-cache');
 </head>
 
 <body>
+<h1>Minecraft Simple Log Viewer</h1>
 <ul>
 <?php
 require_once 'config.php';
@@ -51,6 +52,9 @@ if (isset($_GET['size'])) {
     if ($size <= 0) {
         $size = 1;
     }
+}
+if ($size ==1) {
+    echo '<p><a href="?size=10">show older log</a></p>';
 }
 $logReader = new MinecraftLogReader(LOGS_DIR, MAX_LOG_SIZE * $size);
 $logReader->displayLog();
