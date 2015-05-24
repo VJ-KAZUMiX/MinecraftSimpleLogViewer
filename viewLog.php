@@ -43,26 +43,17 @@ header('Pragma: no-cache');
 <body>
 <ul>
 <?php
-$filename = 'latest.log';
-
-$fp = fopen($filename, 'rb');
-
-while (!feof($fp)) {
-    $line = fgets($fp);
-    if (mb_strpos($line, '[Server thread/INFO]') !== false) {
-        if (mb_strpos($line, 'logged in with entity id') !== false) {
-            continue;
-        }
-        $className = '';
-        if (mb_strpos($line, 'joined the game') !== false) {
-            $className = 'joined';
-        } else if (mb_strpos($line, 'left the game') !== false) {
-            @$className = 'left';
-        }
-        $line = htmlentities($line, ENT_QUOTES, mb_internal_encoding());
-        echo "<li class=\"{$className}\">{$line}</li>";
+require_once 'config.php';
+require_once 'MinecraftLogReader.php';
+$size = 1;
+if (isset($_GET['size'])) {
+    $size = intval ($_GET['size']);
+    if ($size <= 0) {
+        $size = 1;
     }
 }
+$logReader = new MinecraftLogReader('sampleLogs', MAX_LOG_SIZE * $size);
+$logReader->displayLog();
 ?>
 </ul>
 </body>
