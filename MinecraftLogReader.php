@@ -31,6 +31,12 @@ class MinecraftLogReader
      */
     private $seekOffset = 0;
 
+    private $cssClassDic = array (
+        'joined the game' => 'joined',
+        'left the game' => 'left',
+        ' has just earned the achievement ' => 'achievement'
+    );
+
     /**
      * @param string $logDir
      * @param int $maxLogBytes
@@ -118,7 +124,7 @@ class MinecraftLogReader
     private function echoLog($path)
     {
         $filename = basename($path);
-        echo "<hr /><li>{$filename}</li>";
+        echo "<li class='filename'>{$filename}</li>";
 
         $fp = gzopen($path, 'rb');
 
@@ -128,24 +134,57 @@ class MinecraftLogReader
             $this->seekOffset = 0;
         }
 
+        $chatNameLeft = ': &lt;';
+        $chatNameLeftLength = mb_strlen($chatNameLeft);
+        $chatNameRight = '&gt;';
+        $chatNameRightLength = mb_strlen($chatNameRight);
+
+        $targetInfoTag = '[Server thread/INFO]';
+        $targetInfoTagLength = strlen($targetInfoTag);
+
         while (!gzeof($fp)) {
             $line = fgets($fp);
-            $line = mb_convert_encoding($line, 'UTF-8', 'sjis-win');
-            if (mb_strpos($line, '[Server thread/INFO]') === false) {
+            $targetTagPos = mb_strpos($line, $targetInfoTag);
+            if ($targetTagPos === false) {
                 continue;
             }
+            // cancel some info
             if (mb_strpos($line, 'logged in with entity id') !== false || mb_strpos($line, 'lost connection: TextComponent') !== false) {
                 continue;
             }
 
+            // split
+            $date = mb_substr($line, 0 , $targetTagPos);
+            $body = mb_substr($line, mb_strlen($date) + $targetInfoTagLength);
+            $body = mb_convert_encoding($body, 'UTF-8', 'sjis-win');
+
             $className = '';
-            if (mb_strpos($line, 'joined the game') !== false) {
-                $className = 'joined';
-            } else if (mb_strpos($line, 'left the game') !== false) {
-                @$className = 'left';
+            foreach ($this->cssClassDic as $key => $value) {
+                if (mb_strpos($body, $key) !== false) {
+                    $className = $value;
+                    break;
+                }
             }
-            $line = htmlentities($line, ENT_QUOTES, mb_internal_encoding());
-            echo "<li class=\"{$className}\">{$line}</li>";
+
+            $body = htmlentities($body, ENT_QUOTES, mb_internal_encoding());
+
+            // emphasis chat
+            if (mb_strpos($body, $chatNameLeft) === 0) {
+                $chatNameEndPos = mb_strpos($body, $chatNameRight);
+                if ($chatNameEndPos !== false) {
+                    $playerName = mb_substr($body, $chatNameLeftLength, $chatNameEndPos - $chatNameLeftLength);
+                    $chatText = mb_substr($body, $chatNameEndPos + $chatNameRightLength);
+                    $body = "{$chatNameLeft}<strong>{$playerName}</strong>{$chatNameRight}{$chatText}";
+                }
+            }
+
+            if ($className) {
+                $line = "<li class=\"{$className}\">{$date}{$body}</li>";
+            } else {
+                $line = "<li>{$date}{$body}</li>";
+            }
+
+            echo $line;
         }
 
         gzclose($fp);

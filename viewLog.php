@@ -15,31 +15,37 @@ header('Pragma: no-cache');
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Minecraft Simple Log View</title>
-    <style type="text/css">
-        body {
-            text-shadow: 0px 0px #2F2F2F;
-            font-size: 90%;
-            line-height: 1.2;
-            font-family: "Courier New", Courier, monospace;
-        }
-        ul {
-            padding: 0;
-            list-style-type: none;
-        }
-        ul li {
-        }
-        li.joined {
-            background-color: #E7E2FF;
-        }
-        li.left {
-            box-shadow: 0px 0px #B76768;
-            background-color: #FFE4E4;
-        }
-    </style>
+<meta charset="utf-8">
+<title>Minecraft Simple Log View</title>
+<style type="text/css">
+    body {
+        text-shadow: 0px 0px #2F2F2F;
+        font-size: 90%;
+        line-height: 1.2;
+        font-family: "Courier New", Courier, monospace;
+    }
+    ul {
+        padding: 0;
+        list-style-type: none;
+    }
+    ul li {
+    }
+    li.joined {
+        background-color: #E7E2FF;
+    }
+    li.left {
+        box-shadow: 0px 0px #B76768;
+        background-color: #FFE4E4;
+    }
+    li.filename {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+    li.achievement {
+        background-color: #CBE9D8;
+    }
+</style>
 </head>
-
 <body>
 <h1>Minecraft Simple Log Viewer</h1>
 <ul>
