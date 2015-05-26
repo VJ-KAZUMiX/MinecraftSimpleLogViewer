@@ -16,7 +16,7 @@ header('Pragma: no-cache');
 <html>
 <head>
 <meta charset="utf-8">
-<title>Minecraft Simple Log View</title>
+<title>Kishido Minecraft Info</title>
 <style type="text/css">
     body {
         text-shadow: 0px 0px #2F2F2F;
@@ -47,8 +47,8 @@ header('Pragma: no-cache');
 </style>
 </head>
 <body>
-<h1>Minecraft Simple Log Viewer</h1>
-<p><a href="./mcmap/">Minecraft Overviewer!</a></p>
+<h1>Kishido Minecraft Info</h1>
+<p><a href="./mcmap/"><img src="https://google-maps-icons.googlecode.com/files/home.png" width="32" height="37" /><br />Minecraft Overviewer!</a> (マップの状態を確認できます。毎朝6時頃更新)</p>
 <?php
 require_once 'config.php';
 require_once 'MinecraftLogReader.php';
