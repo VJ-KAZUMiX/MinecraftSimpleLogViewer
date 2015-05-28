@@ -48,7 +48,15 @@ header('Pragma: no-cache');
 </head>
 <body>
 <h1>Kishido Minecraft Info</h1>
-<p><a href="./mcmap/"><img src="https://google-maps-icons.googlecode.com/files/home.png" width="32" height="37" /><br />Minecraft Overviewer!</a> (マップの状態を確認できます。毎朝6時頃更新)</p>
+<dl>
+  <dt><a href="./mcmap/"><img src="https://google-maps-icons.googlecode.com/files/home.png" alt="" width="32" height="37" /><br />
+  Minecraft Google Maps</a></dt>
+  <dd>マップの状態を確認できます。毎朝6時頃更新。<br>
+  1行目が [Marker] の看板はデフォルトで表示されます。みんなに知らせたい場所などに活用できます。<br>
+  全ての看板を表示するには Markers メニューから
+  All Signs をチェックします。<br>
+  (Powered with <a href="http://overviewer.org/" target="_blank">The Minecraft Overviewer</a>) </dd>
+</dl>
 <?php
 require_once 'config.php';
 require_once 'MinecraftLogReader.php';
