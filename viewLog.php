@@ -48,10 +48,11 @@ header('Pragma: no-cache');
 </head>
 <body>
 <h1>Kishido Minecraft Info</h1>
+<p>毎朝5時にシャットダウンし、ワールドのバックアップ、Google マップの生成の後に再起動します。</p>
 <dl>
   <dt><a href="./mcmap/"><img src="https://google-maps-icons.googlecode.com/files/home.png" alt="" width="32" height="37" /><br />
   Minecraft Google Maps</a></dt>
-  <dd>マップの状態を確認できます。毎朝6時頃更新。<br>
+  <dd>マップの状態を確認できます。<br>
   1行目が [Marker] の看板はデフォルトで表示されます。みんなに知らせたい場所などに活用できます。<br>
   全ての看板を表示するには Markers メニューから
   All Signs をチェックします。<br>

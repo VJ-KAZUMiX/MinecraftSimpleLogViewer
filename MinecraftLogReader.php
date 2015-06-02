@@ -72,7 +72,9 @@ class MinecraftLogReader
                 }
             }
         }
-        array_unshift($resultLogs, $latestLog);
+        if (!empty($latestLog)) {
+            array_unshift($resultLogs, $latestLog);
+        }
         return $resultLogs;
     }
 
