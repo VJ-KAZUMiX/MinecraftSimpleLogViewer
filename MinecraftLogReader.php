@@ -37,6 +37,12 @@ class MinecraftLogReader
         ' has just earned the achievement ' => 'achievement'
     );
 
+    private $disableFilterDic = array(
+        'logged in with entity id',
+        'lost connection: TextComponent',
+        'com.mojang.authlib.GameProfile@'
+    );
+
     /**
      * @param string $logDir
      * @param int $maxLogBytes
@@ -151,7 +157,14 @@ class MinecraftLogReader
                 continue;
             }
             // cancel some info
-            if (mb_strpos($line, 'logged in with entity id') !== false || mb_strpos($line, 'lost connection: TextComponent') !== false) {
+            $isCancel = false;
+            foreach ($this->disableFilterDic as $disableFilter) {
+                if (mb_strpos($line, $disableFilter) !== false) {
+                    $isCancel = true;
+                    break;
+                }
+            }
+            if ($isCancel) {
                 continue;
             }
 
